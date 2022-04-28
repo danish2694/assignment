@@ -1,0 +1,74 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}
+Kalkine Assignment
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row my-3">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Add Card</h5>
+                    <form id="cardForm">
+                        <div class="mb-3">
+                            <label for="cardTitle" class="form-label">Card Title</label>
+                            <input type="text" class="form-control" name="title" id="cardTitle">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cardText" class="form-label">Card Text</label>
+                            <input type="text" class="form-control" name="text" id="cardText">
+                        </div>
+                        <button type="button" id="save" class="btn btn-primary">Add New Card</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="cards">
+        {% for card in cards %}
+        <div class="col-md-3" id="card_{{card.pk}}">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Title: {{card.fields.title}}</h5>
+                    <h5 class="card-title">Text: {{card.fields.text}}</h5>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-danger remove" type="button" data-href="{{card.pk}}" data-text="{{card.fields.title}}">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}        
+        
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Card</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Do you want to delete <b><span id="modal_body"></span></b>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="deleteBtn" data-id="" class="btn btn-primary delete">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+<script src="/static/assets/js/index.js"></script>
+{% endblock javascripts %}
